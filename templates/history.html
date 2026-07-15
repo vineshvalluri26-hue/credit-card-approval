@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<section class="history-section-container">
+    <div class="info-card">
+        <div class="history-header-box">
+            <div>
+                <h2><i class="fa-solid fa-clock-rotate-left"></i> Prediction History</h2>
+            </div>
+            {% if history %}
+                <form action="{{ url_for('clear_history') }}" method="POST" onsubmit="return confirm('Are you sure you want to permanently clear all prediction logs?');">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fa-solid fa-trash-can"></i> Clear All
+                    </button>
+                </form>
+            {% endif %}
+        </div>
+
+        {% if history %}
+            <div class="table-responsive mt-3">
+                <table class="metrics-table">
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>Approval Chance</th>
+                            <th>Result</th>
+                            <th>Confidence</th>
+                            <th>Income</th>
+                            <th>Age</th>
+                            <th>Education</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in history %}
+                            <tr>
+                                <td>{{ record.timestamp }}</td>
+                                <td>
+                                    <span class="status-pill {% if record.prediction_label == 'Approved' %}active-pill{% else %}rejected-pill{% endif %}">
+                                        {{ record.confidence }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {% if record.prediction_label == 'Approved' %}
+                                        <span class="status-pill active-pill"><i class="fa-solid fa-circle-check"></i> Approved</span>
+                                    {% else %}
+                                        <span class="status-pill rejected-pill"><i class="fa-solid fa-circle-xmark"></i> Rejected</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% set conf_val = record.confidence | replace('%', '') | float %}
+                                    {% if conf_val >= 70 %}
+                                        <span class="status-pill active-pill">High</span>
+                                    {% elif conf_val >= 50 %}
+                                        <span class="status-pill" style="background: rgba(251, 191, 36, 0.15); color: #fbbf24;">Medium</span>
+                                    {% else %}
+                                        <span class="status-pill rejected-pill">Low</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ record.income }}</td>
+                                <td>{{ record.age }}</td>
+                                <td>{{ record.education }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-history-box">
+                <div class="placeholder-icon">
+                    <i class="fa-solid fa-folder-open"></i>
+                </div>
+                <h3>No Predictions Yet</h3>
+                <p>Start checking credit card eligibility to build your prediction history.</p>
+                <a href="{{ url_for('apply') }}" class="btn btn-primary mt-2">
+                    <i class="fa-solid fa-wallet"></i> Check Eligibility Now
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

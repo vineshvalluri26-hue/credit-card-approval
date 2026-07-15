@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CreditShield | Credit Card Approval Predictor</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box">
+                    <i class="fa-solid fa-shield-halved logo-icon"></i>
+                    <span class="logo-text">Credit<span>Shield</span></span>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-tab="overview">
+                    <i class="fa-solid fa-chart-line nav-icon"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="predictor">
+                    <i class="fa-solid fa-wallet nav-icon"></i>
+                    <span>Predictor</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="performance">
+                    <i class="fa-solid fa-gauge-high nav-icon"></i>
+                    <span>Model Performance</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="insights">
+                    <i class="fa-solid fa-magnifying-glass-chart nav-icon"></i>
+                    <span>Data Insights</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="model-badge">
+                    <span class="badge-title">Best Model Active</span>
+                    <span class="badge-value">{{ model.name }}</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <!-- Top Navbar -->
+            <header class="top-navbar">
+                <div class="navbar-left">
+                    <button class="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+                    <h1 class="page-title">Dashboard Overview</h1>
+                </div>
+                <div class="navbar-right">
+                    <div class="date-badge">
+                        <i class="fa-regular fa-calendar"></i>
+                        <span id="current-date">July 7, 2026</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content-wrapper">
+                
+                <!-- ============================================== -->
+                <!-- 1. OVERVIEW TAB -->
+                <!-- ============================================== -->
+                <section id="tab-overview" class="tab-section active">
+                    <!-- Status Cards -->
+                    <div class="dashboard-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon-wrapper blue">
+                                <i class="fa-solid fa-database"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-label">Total Dataset Size</span>
+                                <h3 class="stat-number">36,457</h3>
+                                <span class="stat-desc">Application & Credit merge</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon-wrapper purple">
+                                <i class="fa-solid fa-gears"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-label">Predictive Features</span>
+                                <h3 class="stat-number">23</h3>
+                                <span class="stat-desc">Including 5 engineered features</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon-wrapper green">
+                                <i class="fa-solid fa-bullseye"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-label">Selected Model (XGBoost)</span>
+                                <h3 class="stat-number">{{ model.accuracy }}%</h3>
+                                <span class="stat-desc">Validation accuracy score</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon-wrapper orange">
+                                <i class="fa-solid fa-chart-area"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-label">ROC-AUC Performance</span>
+                                <h3 class="stat-number">0.7918</h3>
+                                <span class="stat-desc">High discriminative power</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Intro Section -->
+                    <div class="info-card">
+                        <h2>Credit Card Approval Prediction System</h2>
+                        <p class="intro-p">
+                            Predicting credit card approval is a vital risk-management task for financial institutions. 
+                            This system employs an advanced machine learning classification pipeline trained on real-world banking datasets containing demographic, occupational, financial, and credit historical metrics of 36,000+ applicants.
+                        </p>
+                        
+                        <div class="flow-container">
+                            <h3>Machine Learning Pipeline Architecture</h3>
+                            <div class="pipeline-flow">
+                                <div class="pipeline-step">
+                                    <div class="step-num">1</div>
+                                    <h4>EDA & Viz</h4>
+                                    <p>Analyzing univariate distributions, handling anomalies, and exploring correlations.</p>
+                                </div>
+                                <div class="flow-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+                                <div class="pipeline-step">
+                                    <div class="step-num">2</div>
+                                    <h4>Preprocessing</h4>
+                                    <p>Merging records, defining binary targets, and filling missing occupation fields.</p>
+                                </div>
+                                <div class="flow-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+                                <div class="pipeline-step">
+                                    <div class="step-num">3</div>
+                                    <h4>Feature Engineering</h4>
+                                    <p>Creating Age/Income groups, Income-per-member, and Retired/Child flags.</p>
+                                </div>
+                                <div class="flow-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+                                <div class="pipeline-step">
+                                    <div class="step-num">4</div>
+                                    <h4>Model Training</h4>
+                                    <p>Evaluating Logistic Regression, Trees, Forests, and XGBoost on ROC-AUC.</p>
+                                </div>
+                                <div class="flow-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+                                <div class="pipeline-step active">
+                                    <div class="step-num"><i class="fa-solid fa-check"></i></div>
+                                    <h4>Deployment</h4>
+                                    <p>Flask web application serving real-time predictions via interactive UI.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Details Row -->
+                    <div class="details-row">
+                        <div class="details-col flex-2">
+                            <div class="info-card h-100">
+                                <h3>Classification & Risk Strategy</h3>
+                                <p>
+                                    To establish a robust decision-making matrix, the target variable (approved/rejected) was defined by evaluating each applicant's monthly payment history status code:
+                                </p>
+                                <ul class="list-bulleted">
+                                    <li><strong>Approved Status (0):</strong> Month marked as closed, no loan, or 1-29 days past due.</li>
+                                    <li><strong>Rejected Status (1):</strong> Month marked as 30+ days, 60+ days, 90+ days, or severe overdue / write-off.</li>
+                                </ul>
+                                <p>
+                                    Since class distribution is heavily imbalanced (only a small percentage of accounts exhibit overdue status), training utilized custom weight ratios (e.g. <code>scale_pos_weight</code> in XGBoost and <code>class_weight='balanced'</code> in Random Forest) to optimize recall on negative/high-risk profiles.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="details-col flex-1">
+                            <div class="info-card h-100 highlight-card-purple">
+                                <h3>Quick Predict</h3>
+                                <p>Ready to evaluate credit risk? Jump straight to our prediction tool, fill out the application details, and let the model estimate approval probabilities.</p>
+                                <button class="btn btn-primary" onclick="switchToTab('predictor')">
+                                    <i class="fa-solid fa-wallet"></i> Go to Predictor
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================== -->
+                <!-- 2. PREDICTOR TAB -->
+                <!-- ============================================== -->
+                <section id="tab-predictor" class="tab-section">
+                    <div class="predictor-container">
+                        <!-- Left Side: Form -->
+                        <div class="form-panel">
+                            <form id="prediction-form" class="styled-form">
+                                <div class="form-header">
+                                    <h2>Interactive Application Profile</h2>
+                                    <p>Input applicant demographics, income, and history to run prediction.</p>
+                                </div>
+
+                                <!-- Part 1: Personal Details -->
+                                <fieldset class="form-fieldset">
+                                    <legend><i class="fa-solid fa-user"></i> Demographic Details</legend>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="gender">Gender</label>
+                                            <select id="gender" name="CODE_GENDER" required>
+                                                {% for opt in dropdowns.gender %}
+                                                    <option value="{{ opt }}">{{ 'Male' if opt == 'M' else 'Female' }} ({{ opt }})</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="age">Age (Years)</label>
+                                            <input type="number" id="age" name="AGE_YEARS" min="18" max="95" value="35" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="education">Education Level</label>
+                                            <select id="education" name="NAME_EDUCATION_TYPE" required>
+                                                {% for opt in dropdowns.education_type %}
+                                                    <option value="{{ opt }}" {% if opt == 'Secondary / secondary special' %}selected{% endif %}>{{ opt }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="family_status">Marital Status</label>
+                                            <select id="family_status" name="NAME_FAMILY_STATUS" required>
+                                                {% for opt in dropdowns.family_status %}
+                                                    <option value="{{ opt }}" {% if opt == 'Married' %}selected{% endif %}>{{ opt }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="children">Number of Children</label>
+                                            <input type="number" id="children" name="CNT_CHILDREN" min="0" max="15" value="0" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="fam_members">Total Family Members</label>
+                                            <input type="number" id="fam_members" name="CNT_FAM_MEMBERS" min="1" max="20" value="2" required>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <!-- Part 2: Financial & Employment Profile -->
+                                <fieldset class="form-fieldset">
+                                    <legend><i class="fa-solid fa-briefcase"></i> Financial & Occupation Profile</legend>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="income">Annual Income ($)</label>
+                                            <input type="number" id="income" name="AMT_INCOME_TOTAL" min="10000" max="5000000" step="5000" value="180000" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="income_type">Income Type</label>
+                                            <select id="income_type" name="NAME_INCOME_TYPE" required>
+                                                {% for opt in dropdowns.income_type %}
+                                                    <option value="{{ opt }}" {% if opt == 'Working' %}selected{% endif %}>{{ opt }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="occupation">Occupation Type</label>
+                                            <select id="occupation" name="OCCUPATION_TYPE" required>
+                                                {% for opt in dropdowns.occupation_type %}
+                                                    <option value="{{ opt }}" {% if opt == 'Laborers' %}selected{% endif %}>{{ opt }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="employment_years">Employment Duration (Years)</label>
+                                            <input type="number" id="employment_years" name="EMPLOYMENT_YEARS" min="0" max="60" step="0.5" value="4.5" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row grid-3">
+                                        <div class="form-group-checkbox">
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" id="own_car" name="FLAG_OWN_CAR" value="Y" checked>
+                                                <span class="slider-toggle"></span>
+                                            </label>
+                                            <span class="checkbox-label">Owns Car</span>
+                                        </div>
+                                        <div class="form-group-checkbox">
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" id="own_realty" name="FLAG_OWN_REALTY" value="Y" checked>
+                                                <span class="slider-toggle"></span>
+                                            </label>
+                                            <span class="checkbox-label">Owns Property</span>
+                                        </div>
+                                        <div class="form-group-checkbox">
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" id="is_retired" name="IS_RETIRED">
+                                                <span class="slider-toggle"></span>
+                                            </label>
+                                            <span class="checkbox-label">Retired / Pensioner</span>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <!-- Part 3: History & Contacts -->
+                                <fieldset class="form-fieldset">
+                                    <legend><i class="fa-solid fa-credit-card"></i> Account History & Communications</legend>
+                                    <div class="form-group slider-group">
+                                        <div class="slider-labels">
+                                            <label for="num_months">Credit History Length (Months)</label>
+                                            <span id="months-val" class="slider-val">24 months</span>
+                                        </div>
+                                        <input type="range" id="num_months" name="NUM_MONTHS" min="1" max="61" value="24" class="range-slider">
+                                    </div>
+
+                                    <div class="form-row grid-3">
+                                        <div class="form-group-checkbox">
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" id="work_phone" name="FLAG_WORK_PHONE" value="1">
+                                                <span class="slider-toggle"></span>
+                                            </label>
+                                            <span class="checkbox-label">Has Work Phone</span>
+                                        </div>
+                                        <div class="form-group-checkbox">
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" id="phone" name="FLAG_PHONE" value="1" checked>
+                                                <span class="slider-toggle"></span>
+                                            </label>
+                                            <span class="checkbox-label">Has Home Phone</span>
+                                        </div>
+                                        <div class="form-group-checkbox">
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" id="email" name="FLAG_EMAIL" value="1">
+                                                <span class="slider-toggle"></span>
+                                            </label>
+                                            <span class="checkbox-label">Has Email Address</span>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <button type="submit" class="btn btn-submit" id="submit-btn">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i> Evaluate Credit Risk
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Right Side: Predictions Output -->
+                        <div class="result-panel">
+                            <!-- Placeholder -->
+                            <div id="result-placeholder" class="result-placeholder">
+                                <div class="placeholder-icon">
+                                    <i class="fa-solid fa-shield-heart"></i>
+                                </div>
+                                <h3>Decision Engine Idle</h3>
+                                <p>Fill out the application profile on the left and click "Evaluate Credit Risk" to run machine learning predictions.</p>
+                            </div>
+
+                            <!-- Loading State -->
+                            <div id="result-loading" class="result-loading d-none">
+                                <div class="spinner"></div>
+                                <h3>Processing Risk Metrics</h3>
+                                <p>Mapping categories, calculating derivatives, and querying XGBoost classifier...</p>
+                            </div>
+
+                            <!-- Success Result Display -->
+                            <div id="result-display" class="result-display d-none">
+                                <div class="result-card" id="outcome-card">
+                                    <div class="result-header-badge">
+                                        <span id="outcome-badge">Approved</span>
+                                    </div>
+                                    
+                                    <!-- Gauge/Score UI -->
+                                    <div class="score-circle-container">
+                                        <div class="circular-progress">
+                                            <div class="value-container" id="score-percentage">0%</div>
+                                        </div>
+                                        <span class="score-label">Acceptance Confidence</span>
+                                    </div>
+                                    
+                                    <h3 class="outcome-message" id="outcome-message">Applicant credit profile verified as low risk.</h3>
+                                </div>
+
+                                <!-- Key Factors -->
+                                <div class="factors-card">
+                                    <h4><i class="fa-solid fa-list-check"></i> Key Decision Factors</h4>
+                                    <ul id="reasons-list" class="reasons-list">
+                                        <li>Stable employment history.</li>
+                                        <li>Income per member is within parameters.</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Derived Metrics -->
+                                <div class="derived-card">
+                                    <h4><i class="fa-solid fa-calculator"></i> Derived Profiling Metrics</h4>
+                                    <div class="metrics-grid">
+                                        <div class="metric-mini-card">
+                                            <span class="mini-label">Disposable Income/Member</span>
+                                            <span class="mini-value" id="val-income-member">$90,000</span>
+                                        </div>
+                                        <div class="metric-mini-card">
+                                            <span class="mini-label">Binned Age Cohort</span>
+                                            <span class="mini-value" id="val-age-group">26-35</span>
+                                        </div>
+                                        <div class="metric-mini-card">
+                                            <span class="mini-label">Binned Income Level</span>
+                                            <span class="mini-value" id="val-income-group">Medium</span>
+                                        </div>
+                                        <div class="metric-mini-card">
+                                            <span class="mini-label">Retired Status Flag</span>
+                                            <span class="mini-value" id="val-retired-flag">False</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================== -->
+                <!-- 3. MODEL PERFORMANCE TAB -->
+                <!-- ============================================== -->
+                <section id="tab-performance" class="tab-section">
+                    <!-- Metrics Table -->
+                    <div class="info-card">
+                        <h2>Machine Learning Model Comparison</h2>
+                        <p>We trained and evaluated four classification algorithms on the stratified test split. Metrics show validation stats.</p>
+                        
+                        <div class="table-responsive">
+                            <table class="metrics-table">
+                                <thead>
+                                    <tr>
+                                        <th>Classification Algorithm</th>
+                                        <th>Accuracy</th>
+                                        <th>F1-Score (Weighted)</th>
+                                        <th>ROC-AUC</th>
+                                        <th>Training Time</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="active-row">
+                                        <td><strong>XGBoost Classifier</strong></td>
+                                        <td>85.71%</td>
+                                        <td>86.32%</td>
+                                        <td>0.7918</td>
+                                        <td>0.56s</td>
+                                        <td><span class="status-pill active-pill">Active (Selected)</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Random Forest Classifier</td>
+                                        <td>84.12%</td>
+                                        <td>84.95%</td>
+                                        <td>0.7844</td>
+                                        <td>3.80s</td>
+                                        <td><span class="status-pill">Candidate</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Decision Tree Classifier</td>
+                                        <td>79.45%</td>
+                                        <td>80.82%</td>
+                                        <td>0.7410</td>
+                                        <td>0.08s</td>
+                                        <td><span class="status-pill">Candidate</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Logistic Regression</td>
+                                        <td>61.22%</td>
+                                        <td>63.15%</td>
+                                        <td>0.6540</td>
+                                        <td>0.89s</td>
+                                        <td><span class="status-pill">Candidate (Scaled)</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Comparison Plots Grid -->
+                    <div class="plots-grid">
+                        <div class="plot-container-card">
+                            <h3>ROC Curves - All Candidates</h3>
+                            <p class="plot-caption">Plotting True Positive Rate vs. False Positive Rate. The higher the area under the curve (AUC), the better the model distinguishes risk classes.</p>
+                            <div class="plot-img-wrapper">
+                                <img src="{{ url_for('static', filename='images/plots/model_10_roc_curves.png') }}" alt="ROC Curves Comparison" class="plot-image">
+                            </div>
+                        </div>
+                        <div class="plot-container-card">
+                            <h3>Metrics Visual Overview</h3>
+                            <p class="plot-caption">Comparison of Accuracy, F1-Score, and ROC-AUC across all algorithms. XGBoost consistently outperforms trees and linear models.</p>
+                            <div class="plot-img-wrapper">
+                                <img src="{{ url_for('static', filename='images/plots/model_09_metrics_comparison.png') }}" alt="Metrics Comparison Bar Chart" class="plot-image">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-card mt-4">
+                        <h2>XGBoost Feature Importances & Confusion Matrix</h2>
+                        <p>XGBoost assigns an importance score to features based on their information gain during tree splits. Below is the XGBoost confusion matrix and the complete performance diagnostics.</p>
+                        <div class="plots-grid mt-3">
+                            <div class="plot-container-card">
+                                <h3>XGBoost Confusion Matrix</h3>
+                                <div class="plot-img-wrapper">
+                                    <img src="{{ url_for('static', filename='images/plots/model_07_xgb_confusion_matrix.png') }}" alt="XGBoost Confusion Matrix" class="plot-image">
+                                </div>
+                            </div>
+                            <div class="plot-container-card">
+                                <h3>XGBoost Feature Importance</h3>
+                                <div class="plot-img-wrapper">
+                                    <img src="{{ url_for('static', filename='images/plots/model_08_xgb_feature_importance.png') }}" alt="XGBoost Feature Importance Chart" class="plot-image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================== -->
+                <!-- 4. DATA INSIGHTS TAB -->
+                <!-- ============================================== -->
+                <section id="tab-insights" class="tab-section">
+                    <div class="info-card">
+                        <h2>Exploratory Data Analysis (EDA) Insights</h2>
+                        <p>Key findings and distributions extracted from the raw banking datasets of over 36,000 applicants.</p>
+                    </div>
+
+                    <div class="plots-grid">
+                        <div class="plot-container-card">
+                            <h3>Credit Record Status Proportions</h3>
+                            <p class="plot-caption">Distributions of raw payment history flags in months. Codes C (Closed) and 0 (0-29 days past due) dominate. Overdue states 1-5 constitute the credit risk target.</p>
+                            <div class="plot-img-wrapper">
+                                <img src="{{ url_for('static', filename='images/plots/eda_02_credit_status_distribution.png') }}" alt="Credit Status Distributions" class="plot-image">
+                            </div>
+                        </div>
+                        <div class="plot-container-card">
+                            <h3>Applicant Numerical Distributions</h3>
+                            <p class="plot-caption">Histograms showing distributions of applicant age, annual income, employment years, and children count. Note the income distribution is right-skewed.</p>
+                            <div class="plot-img-wrapper">
+                                <img src="{{ url_for('static', filename='images/plots/eda_06_numerical_distributions.png') }}" alt="Numerical Distributions" class="plot-image">
+                            </div>
+                        </div>
+                        <div class="plot-container-card">
+                            <h3>Demographic Distributions (Part 1)</h3>
+                            <p class="plot-caption">Distributions showing Gender proportions, Car ownership, Property ownership, and Family status classes.</p>
+                            <div class="plot-img-wrapper">
+                                <img src="{{ url_for('static', filename='images/plots/eda_03_categorical_count_plots_1.png') }}" alt="Categorical Counts 1" class="plot-image">
+                            </div>
+                        </div>
+                        <div class="plot-container-card">
+                            <h3>Demographic Distributions (Part 2)</h3>
+                            <p class="plot-caption">Distributions showing Income types, Education level proportions, and Housing types.</p>
+                            <div class="plot-img-wrapper">
+                                <img src="{{ url_for('static', filename='images/plots/eda_04_categorical_count_plots_2.png') }}" alt="Categorical Counts 2" class="plot-image">
+                            </div>
+                        </div>
+                        <div class="plot-container-card">
+                            <h3>Occupation Type Distribution</h3>
+                            <p class="plot-caption">Frequency of occupations declared by applicants. Note that 'Unknown' is the most frequent category, representing pensioners, students, or freelancers.</p>
+                            <div class="plot-img-wrapper">
+                                <img src="{{ url_for('static', filename='images/plots/eda_05_occupation_type.png') }}" alt="Occupation Types" class="plot-image">
+                            </div>
+                        </div>
+                        <div class="plot-container-card">
+                            <h3>Numerical Correlation Heatmap</h3>
+                            <p class="plot-caption">Pearson correlation coefficient heatmap. Strongest correlation is between count of children (CNT_CHILDREN) and count of family members (CNT_FAM_MEMBERS).</p>
+                            <div class="plot-img-wrapper">
+                                <img src="{{ url_for('static', filename='images/plots/eda_09_correlation_heatmap.png') }}" alt="Correlation Heatmap" class="plot-image">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+            </div>
+        </main>
+    </div>
+
+    <!-- Main JavaScript Logic -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

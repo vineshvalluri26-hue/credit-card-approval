@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="minimal-hero-section">
+    <div class="hero-content-grid">
+        <div class="hero-text-side">
+            <span class="hero-badge"><i class="fa-solid fa-microchip"></i> ML-Powered Risk Scoring</span>
+            <h1 class="minimal-title">Credit Card Approval<br><span class="animate-glow">Prediction</span></h1>
+            <p class="minimal-subtitle">Our AI model analyzes financial, demographic and credit behavior to predict your approval chances instantly with high accuracy.</p>
+            <div class="minimal-action-box">
+                <a href="{{ url_for('apply') }}" class="btn btn-primary btn-lg">
+                    Check Eligibility <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="hero-visual-side">
+            <!-- CSS Credit Card Visual -->
+            <div class="credit-card-visual">
+                <div class="cc-top-row">
+                    <span class="cc-chip"><i class="fa-solid fa-sim-card"></i></span>
+                    <span class="cc-wifi"><i class="fa-solid fa-wifi"></i></span>
+                </div>
+                <div class="cc-number">
+                    <span>1234</span>
+                    <span>5678</span>
+                    <span>9012</span>
+                    <span>3456</span>
+                </div>
+                <div class="cc-bottom-row">
+                    <div class="cc-holder">
+                        <span class="cc-label">CARDHOLDER</span>
+                        <span class="cc-name">CREDIT CARD</span>
+                    </div>
+                    <div class="cc-expiry">
+                        <span class="cc-label">VALID</span>
+                        <span class="cc-name">12/28</span>
+                    </div>
+                </div>
+                <div class="cc-shield-badge">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Feature Cards Row -->
+<section class="feature-cards-grid">
+    <div class="feature-card">
+        <div class="feature-card-icon">
+            <i class="fa-solid fa-bullseye"></i>
+        </div>
+        <h3>Accurate Predictions</h3>
+        <p>94.2% test accuracy with advanced ML algorithms.</p>
+    </div>
+    <div class="feature-card">
+        <div class="feature-card-icon">
+            <i class="fa-solid fa-bolt"></i>
+        </div>
+        <h3>Instant Results</h3>
+        <p>Get approval prediction in seconds, not days.</p>
+    </div>
+    <div class="feature-card">
+        <div class="feature-card-icon">
+            <i class="fa-solid fa-lock"></i>
+        </div>
+        <h3>Secure & Private</h3>
+        <p>Your data is encrypted and never stored or shared.</p>
+    </div>
+    <div class="feature-card">
+        <div class="feature-card-icon">
+            <i class="fa-solid fa-brain"></i>
+        </div>
+        <h3>Smart Decision</h3>
+        <p>Helps financial institutions make better lending decisions.</p>
+    </div>
+</section>
+{% endblock %}

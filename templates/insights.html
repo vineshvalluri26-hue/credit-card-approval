@@ -1,0 +1,152 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<!-- Metrics Table -->
+<div class="info-card">
+    <h2>Machine Learning Model Evaluation & Comparison</h2>
+    <p>Four classification algorithms were trained and evaluated on the stratified test split of 36,457 applicant records. Below are the validation metrics compiled from Step 3 of the pipeline.</p>
+    
+    <div class="table-responsive">
+        <table class="metrics-table">
+            <thead>
+                <tr>
+                    <th>Classification Algorithm</th>
+                    <th>Accuracy</th>
+                    <th>F1-Score (Weighted)</th>
+                    <th>ROC-AUC</th>
+                    <th>Training Time</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="active-row">
+                    <td><strong>XGBoost Classifier</strong></td>
+                    <td>85.71%</td>
+                    <td>86.32%</td>
+                    <td>0.7918</td>
+                    <td>0.56s</td>
+                    <td><span class="status-pill active-pill">Active (Selected)</span></td>
+                </tr>
+                <tr>
+                    <td>Random Forest Classifier</td>
+                    <td>84.12%</td>
+                    <td>84.95%</td>
+                    <td>0.7844</td>
+                    <td>3.80s</td>
+                    <td><span class="status-pill">Candidate</span></td>
+                </tr>
+                <tr>
+                    <td>Decision Tree Classifier</td>
+                    <td>79.45%</td>
+                    <td>80.82%</td>
+                    <td>0.7410</td>
+                    <td>0.08s</td>
+                    <td><span class="status-pill">Candidate</span></td>
+                </tr>
+                <tr>
+                    <td>Logistic Regression</td>
+                    <td>61.22%</td>
+                    <td>63.15%</td>
+                    <td>0.6540</td>
+                    <td>0.89s</td>
+                    <td><span class="status-pill">Candidate (Scaled)</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Active Model Properties -->
+<div class="info-card">
+    <h3>Active Decision Model Properties</h3>
+    <p>The deployed model is a serialized XGBoost Gradient Boosting Classifier (using decision trees as base estimators) configured to handle severe class imbalances.</p>
+    <ul class="list-bulleted">
+        <li><strong>Base Estimator Count (n_estimators):</strong> 300</li>
+        <li><strong>Max Depth:</strong> 8 levels per tree</li>
+        <li><strong>Class Weight Balance (scale_pos_weight):</strong> 6.53 (negative instances to positive ratio)</li>
+        <li><strong>Learning Rate:</strong> 0.1</li>
+        <li><strong>Feature scaling required:</strong> False (tree-based splits are scale-invariant)</li>
+    </ul>
+</div>
+
+<!-- Comparison Plots Grid -->
+<div class="plots-grid">
+    <div class="plot-container-card">
+        <h3>ROC Curves - All Candidates</h3>
+        <p class="plot-caption">Plotting True Positive Rate vs. False Positive Rate. The higher the area under the curve (AUC), the better the model distinguishes risk classes.</p>
+        <div class="plot-img-wrapper">
+            <img src="{{ url_for('static', filename='images/plots/model_10_roc_curves.png') }}" alt="ROC Curves Comparison" class="plot-image">
+        </div>
+    </div>
+    
+    <div class="plot-container-card">
+        <h3>Metrics Visual Overview</h3>
+        <p class="plot-caption">Comparison of Accuracy, F1-Score, and ROC-AUC across all algorithms. XGBoost consistently outperforms trees and linear models.</p>
+        <div class="plot-img-wrapper">
+            <img src="{{ url_for('static', filename='images/plots/model_09_metrics_comparison.png') }}" alt="Metrics Comparison Bar Chart" class="plot-image">
+        </div>
+    </div>
+</div>
+
+<div class="info-card mt-4">
+    <h2>XGBoost Deeper Diagnostics</h2>
+    <p>Evaluation details showing information gain per feature split and risk prediction splits.</p>
+    <div class="plots-grid mt-3">
+        <div class="plot-container-card">
+            <h3>XGBoost Confusion Matrix</h3>
+            <p class="plot-caption">Fitted class counts on the test set. Tracks predictions against actual defaults.</p>
+            <div class="plot-img-wrapper">
+                <img src="{{ url_for('static', filename='images/plots/model_07_xgb_confusion_matrix.png') }}" alt="XGBoost Confusion Matrix" class="plot-image">
+            </div>
+        </div>
+        
+        <div class="plot-container-card">
+            <h3>XGBoost Feature Importance</h3>
+            <p class="plot-caption">Gini gain ranking of demographics and financial profiles during fitting.</p>
+            <div class="plot-img-wrapper">
+                <img src="{{ url_for('static', filename='images/plots/model_08_xgb_feature_importance.png') }}" alt="XGBoost Feature Importance Chart" class="plot-image">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Exploratory Data Analysis Plots -->
+<div class="info-card mt-4">
+    <h2>Exploratory Data Analysis (EDA) Insights</h2>
+    <p>A review of distributions and class alignments analyzed from the raw banking tables of 36K+ records.</p>
+    
+    <div class="plots-grid mt-3">
+        <div class="plot-container-card">
+            <h3>Credit Record Status Proportions</h3>
+            <p class="plot-caption">Distributions of raw payment history flags in months. Codes C (Closed) and 0 (0-29 days past due) dominate. Overdue states 1-5 constitute the credit risk target.</p>
+            <div class="plot-img-wrapper">
+                <img src="{{ url_for('static', filename='images/plots/eda_02_credit_status_distribution.png') }}" alt="Credit Status Distributions" class="plot-image">
+            </div>
+        </div>
+        
+        <div class="plot-container-card">
+            <h3>Applicant Numerical Distributions</h3>
+            <p class="plot-caption">Histograms showing distributions of applicant age, annual income, employment years, and children count. Note the income distribution is right-skewed.</p>
+            <div class="plot-img-wrapper">
+                <img src="{{ url_for('static', filename='images/plots/eda_06_numerical_distributions.png') }}" alt="Numerical Distributions" class="plot-image">
+            </div>
+        </div>
+
+        <div class="plot-container-card">
+            <h3>Numerical Correlation Heatmap</h3>
+            <p class="plot-caption">Pearson correlation coefficient heatmap. Strongest correlation is between count of children (CNT_CHILDREN) and count of family members (CNT_FAM_MEMBERS).</p>
+            <div class="plot-img-wrapper">
+                <img src="{{ url_for('static', filename='images/plots/eda_09_correlation_heatmap.png') }}" alt="Correlation Heatmap" class="plot-image">
+            </div>
+        </div>
+        
+        <div class="plot-container-card">
+            <h3>Occupation Type Distribution</h3>
+            <p class="plot-caption">Frequency of occupations declared by applicants. Note that 'Unknown' is the most frequent category, representing pensioners, students, or freelancers.</p>
+            <div class="plot-img-wrapper">
+                <img src="{{ url_for('static', filename='images/plots/eda_05_occupation_type.png') }}" alt="Occupation Types" class="plot-image">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
