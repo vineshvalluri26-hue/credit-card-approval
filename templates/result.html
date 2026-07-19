@@ -3,7 +3,7 @@
 {% block content %}
 <section class="result-section-container">
     <a href="{{ url_for('apply') }}" class="back-link">
-        <i class="fa-solid fa-arrow-left"></i> Back to Form
+        <i class="fa-solid fa-arrow-left"></i> Back to Assessment Form
     </a>
 
     <div class="result-panel-full">
@@ -11,15 +11,15 @@
             <!-- Left Side: Result Card & Score -->
             <div class="result-card-column">
                 <div class="form-header">
-                    <h2>Prediction Result</h2>
+                    <h2>Model <span class="text-accent">Decision Output</span></h2>
                 </div>
 
                 <div class="result-card {% if result.prediction == 0 %}approved{% else %}rejected{% endif %}" id="outcome-card">
                     <div class="result-header-badge">
-                        <span id="outcome-badge">{% if result.prediction == 0 %}Approved{% else %}Rejected{% endif %}</span>
+                        <span id="outcome-badge">{% if result.prediction == 0 %}APPROVED{% else %}REJECTED{% endif %}</span>
                     </div>
                     <h3 class="outcome-subtitle">
-                        {% if result.prediction == 0 %}High Approval Chance{% else %}Low Approval Chance{% endif %}
+                        {% if result.prediction == 0 %}High Qualification Standing{% else %}High Risk Level Flagged{% endif %}
                     </h3>
                     
                     <!-- Gauge/Score UI -->
@@ -27,16 +27,16 @@
                         <div class="circular-progress animate-on-load" data-score="{{ (result.confidence * 100) | round | int }}" data-prediction="{{ result.prediction }}">
                             <div class="value-container" id="score-percentage">0%</div>
                         </div>
-                        <span class="score-label">Approval Probability</span>
+                        <span class="score-label">Approval Confidence Probability</span>
                     </div>
                     
                     <div class="outcome-footer-message">
                         <i class="fa-solid fa-circle-info"></i>
                         <span>
                             {% if result.prediction == 0 %}
-                                Your Application is <strong>Likely to be Approved!</strong>
+                                Profile parameters indicate <strong>High Probability of Approval</strong>
                             {% else %}
-                                Your Application is <strong>Likely to be Rejected.</strong>
+                                Profile parameters indicate <strong>Low Eligibility / High Risk</strong>
                             {% endif %}
                         </span>
                     </div>
@@ -45,10 +45,10 @@
                 <!-- Call to Actions -->
                 <div class="result-actions">
                     <a href="{{ url_for('apply') }}" class="btn btn-primary">
-                        <i class="fa-solid fa-plus"></i> New Prediction
+                        <i class="fa-solid fa-plus"></i> New Assessment
                     </a>
                     <a href="{{ url_for('history') }}" class="btn btn-secondary">
-                        <i class="fa-solid fa-history"></i> View History
+                        <i class="fa-solid fa-clock-rotate-left"></i> History Log
                     </a>
                 </div>
             </div>
@@ -56,30 +56,30 @@
             <!-- Right Side: Details and Insights -->
             <div class="result-details-column">
                 <div class="form-header">
-                    <h2>Prediction Insights</h2>
+                    <h2>Risk Analysis & Profile Summary</h2>
                 </div>
 
                 <!-- Quick Stats Row -->
                 <div class="quick-stats-row">
                     <div class="quick-stat">
-                        <span class="quick-stat-label">Confidence Score</span>
+                        <span class="quick-stat-label">Model Confidence</span>
                         <span class="quick-stat-value">{{ (result.confidence * 100) | round(1) }}%</span>
                     </div>
                     <div class="quick-stat">
-                        <span class="quick-stat-label">Risk Level</span>
+                        <span class="quick-stat-label">Evaluated Risk</span>
                         <span class="quick-stat-value {% if result.prediction == 0 %}text-success{% else %}text-danger{% endif %}">
-                            {% if result.prediction == 0 %}Low{% else %}High{% endif %}
+                            {% if result.prediction == 0 %}Low Risk{% else %}High Risk{% endif %}
                         </span>
                     </div>
                     <div class="quick-stat">
-                        <span class="quick-stat-label">Model Used</span>
-                        <span class="quick-stat-value">XGBoost</span>
+                        <span class="quick-stat-label">Classifier Engine</span>
+                        <span class="quick-stat-value">Machine Learning</span>
                     </div>
                 </div>
 
                 <!-- Key Factors -->
                 <div class="factors-card {% if result.prediction == 0 %}approved-factors{% else %}rejected-factors{% endif %}">
-                    <h4><i class="fa-solid fa-list-check"></i> Key Decision Factors</h4>
+                    <h4><i class="fa-solid fa-list-check"></i> Primary Decision Rationale</h4>
                     <ul id="reasons-list" class="reasons-list">
                         {% for reason in result.reasons %}
                             <li>{{ reason }}</li>
@@ -89,7 +89,7 @@
 
                 <!-- Derived Metrics -->
                 <div class="derived-card">
-                    <h4><i class="fa-solid fa-calculator"></i> Application Summary</h4>
+                    <h4><i class="fa-solid fa-calculator"></i> Evaluated Applicant Profile</h4>
                     <div class="metrics-grid">
                         <div class="metric-mini-card">
                             <span class="mini-label">Gender</span>
@@ -112,7 +112,7 @@
                             <span class="mini-value">{{ result.applicant_data.education }}</span>
                         </div>
                         <div class="metric-mini-card">
-                            <span class="mini-label">Credit History</span>
+                            <span class="mini-label">Account History</span>
                             <span class="mini-value">{{ result.applicant_data.history }}</span>
                         </div>
                         <div class="metric-mini-card">
@@ -120,7 +120,7 @@
                             <span class="mini-value">₹{{ result.derived_metrics.income_per_member | round(2) }}</span>
                         </div>
                         <div class="metric-mini-card">
-                            <span class="mini-label">Family Members</span>
+                            <span class="mini-label">Family Size</span>
                             <span class="mini-value">{{ result.applicant_data.fam_members }}</span>
                         </div>
                     </div>

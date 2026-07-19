@@ -2,20 +2,20 @@
 
 {% block content %}
 <section class="form-section-container">
-    <div class="form-panel-full">
-        <a href="{{ url_for('home') }}" class="back-link">
-            <i class="fa-solid fa-arrow-left"></i> Back to Home
-        </a>
+    <a href="{{ url_for('home') }}" class="back-link">
+        <i class="fa-solid fa-arrow-left"></i> Back to Home
+    </a>
 
+    <div class="form-panel-full">
         <div class="form-header">
-            <h2>Check Your Credit Card <span class="text-accent">Eligibility</span></h2>
-            <p>Fill in your details below to get your approval prediction</p>
+            <h2>Application <span class="text-accent">Eligibility Assessment</span></h2>
+            <p>Fill in applicant parameters below to run the predictive risk classification model.</p>
         </div>
 
         <form action="{{ url_for('predict') }}" method="POST" id="prediction-form" class="styled-form">
             <!-- Part 1: Applicant Details -->
             <fieldset class="form-fieldset">
-                <legend><i class="fa-solid fa-user"></i> Applicant Details</legend>
+                <legend><i class="fa-solid fa-user-gear"></i> Applicant Profile</legend>
                 <div class="form-row form-row-3">
                     <div class="form-group">
                         <label for="gender">Gender</label>
@@ -26,7 +26,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="age">Age</label>
+                        <label for="age">Age (Years)</label>
                         <input type="text" id="age" name="AGE_YEARS" value="30" inputmode="numeric" pattern="[0-9]*" required>
                     </div>
                     <div class="form-group">
@@ -65,10 +65,10 @@
 
             <!-- Part 2: Employment & Income -->
             <fieldset class="form-fieldset">
-                <legend><i class="fa-solid fa-briefcase"></i> Employment & Income</legend>
+                <legend><i class="fa-solid fa-briefcase"></i> Employment & Financials</legend>
                 <div class="form-row form-row-3">
                     <div class="form-group">
-                        <label for="income_type">Employment Status</label>
+                        <label for="income_type">Income Category</label>
                         <select id="income_type" name="NAME_INCOME_TYPE" required>
                             {% for opt in dropdowns.income_type %}
                                 <option value="{{ opt }}" {% if opt == 'Working' %}selected{% endif %}>{{ opt }}</option>
@@ -87,7 +87,7 @@
 
                 <div class="form-row form-row-3">
                     <div class="form-group">
-                        <label for="occupation">Occupation Type</label>
+                        <label for="occupation">Occupation</label>
                         <select id="occupation" name="OCCUPATION_TYPE" required>
                             {% for opt in dropdowns.occupation_type %}
                                 <option value="{{ opt }}" {% if opt == 'Laborers' %}selected{% endif %}>{{ opt }}</option>
@@ -95,11 +95,11 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="fam_members">Total Family Members</label>
+                        <label for="fam_members">Family Size</label>
                         <input type="text" id="fam_members" name="CNT_FAM_MEMBERS" value="2" inputmode="numeric" pattern="[0-9]*" required>
                     </div>
                     <div class="form-group">
-                        <label for="own_car_select">Owns Car</label>
+                        <label for="own_car_select">Owns Vehicle</label>
                         <select id="own_car_select" name="FLAG_OWN_CAR">
                             <option value="Y">Yes</option>
                             <option value="N" selected>No</option>
@@ -108,12 +108,12 @@
                 </div>
             </fieldset>
 
-            <!-- Part 3: Credit Profile -->
+            <!-- Part 3: Financial History -->
             <fieldset class="form-fieldset">
-                <legend><i class="fa-solid fa-credit-card"></i> Credit Profile</legend>
+                <legend><i class="fa-solid fa-layer-group"></i> Financial History Profile</legend>
                 <div class="form-row form-row-3">
                     <div class="form-group">
-                        <label for="num_months">Credit History (Months)</label>
+                        <label for="num_months">Account History (Months)</label>
                         <input type="text" id="num_months" name="NUM_MONTHS" value="24" inputmode="numeric" pattern="[0-9]*" required>
                     </div>
                     <div class="form-group">
@@ -124,8 +124,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <!-- Hidden fields for remaining toggles -->
-                        <label>Contact Info</label>
+                        <label>Contact Channels</label>
                         <div class="contact-toggles">
                             <label class="inline-check">
                                 <input type="checkbox" id="work_phone" name="FLAG_WORK_PHONE" value="1">
@@ -133,7 +132,7 @@
                             </label>
                             <label class="inline-check">
                                 <input type="checkbox" id="phone" name="FLAG_PHONE" value="1" checked>
-                                <span>Home Phone</span>
+                                <span>Mobile</span>
                             </label>
                             <label class="inline-check">
                                 <input type="checkbox" id="email" name="FLAG_EMAIL" value="1">
@@ -149,18 +148,18 @@
                             <input type="checkbox" id="is_retired" name="IS_RETIRED">
                             <span class="slider-toggle"></span>
                         </label>
-                        <span class="checkbox-label">Retired / Pensioner</span>
+                        <span class="checkbox-label">Retired / Pensioner Status</span>
                     </div>
                 </div>
             </fieldset>
 
             <!-- Action Buttons -->
             <div class="form-actions">
-                <button type="submit" class="btn btn-primary btn-submit" id="submit-btn">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> Predict Approval
-                </button>
                 <button type="reset" class="btn btn-secondary" id="reset-btn">
-                    <i class="fa-solid fa-rotate-right"></i> Reset
+                    <i class="fa-solid fa-rotate-right"></i> Reset Form
+                </button>
+                <button type="submit" class="btn btn-primary btn-submit" id="submit-btn">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Evaluate Qualification
                 </button>
             </div>
         </form>

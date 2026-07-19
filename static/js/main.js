@@ -1,5 +1,5 @@
 /* ==========================================================================
-   CreditShield - Frontend JavaScript Logic
+   VaultGate AI - Frontend JavaScript Logic
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -69,8 +69,8 @@ function fixNumberInputs() {
                 if (val === '' || isNaN(parseFloat(val))) {
                     e.preventDefault();
                     input.focus();
-                    input.style.borderColor = 'hsl(350, 89%, 60%)';
-                    input.style.boxShadow = '0 0 10px hsla(350, 89%, 60%, 0.3)';
+                    input.style.borderColor = '#f43f5e';
+                    input.style.boxShadow = '0 0 12px rgba(244, 63, 94, 0.4)';
                     setTimeout(() => {
                         input.style.borderColor = '';
                         input.style.boxShadow = '';
@@ -160,10 +160,9 @@ function animateProgress(targetScore, prediction, containerEl, textEl) {
     let currentScore = 0;
     const speed = 10; // lower is faster
     
-    // Choose ring color based on status (0=Approved, 1=Rejected)
-    // Both use green as primary for the new theme
-    const progressColor = prediction === 0 ? 'hsl(160, 84%, 39%)' : 'hsl(350, 89%, 60%)';
-    const trackColor = 'hsl(223, 30%, 15%)';
+    // Choose ring color based on status (0=Approved: Royal Purple/Violet, 1=Rejected: Crimson Pink)
+    const progressColor = prediction === 0 ? '#8b5cf6' : '#f43f5e';
+    const trackColor = 'rgba(255, 255, 255, 0.08)';
 
     const timer = setInterval(() => {
         if (targetScore <= 0) {

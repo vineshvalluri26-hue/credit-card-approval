@@ -5,40 +5,43 @@
 <section class="minimal-hero-section">
     <div class="hero-content-grid">
         <div class="hero-text-side">
-            <span class="hero-badge"><i class="fa-solid fa-microchip"></i> ML-Powered Risk Scoring</span>
-            <h1 class="minimal-title">Credit Card Approval<br><span class="animate-glow">Prediction</span></h1>
-            <p class="minimal-subtitle">Our AI model analyzes financial, demographic and credit behavior to predict your approval chances instantly with high accuracy.</p>
+            <span class="hero-badge"><i class="fa-solid fa-microchip"></i> Machine Learning Analytics</span>
+            <h1 class="minimal-title">Card Application<br><span class="animate-glow">Approval Intelligence</span></h1>
+            <p class="minimal-subtitle">Evaluate financial eligibility instantly with our predictive machine learning risk engine. Input demographic and financial profile metrics to receive real-time qualification decisions.</p>
             <div class="minimal-action-box">
                 <a href="{{ url_for('apply') }}" class="btn btn-primary btn-lg">
                     Check Eligibility <i class="fa-solid fa-arrow-right"></i>
                 </a>
+                <a href="{{ url_for('history') }}" class="btn btn-secondary btn-lg">
+                    View Query History
+                </a>
             </div>
         </div>
         <div class="hero-visual-side">
-            <!-- CSS Credit Card Visual -->
+            <!-- 3D Dynamic Visual Card -->
             <div class="credit-card-visual">
                 <div class="cc-top-row">
-                    <span class="cc-chip"><i class="fa-solid fa-sim-card"></i></span>
+                    <span class="cc-chip"><i class="fa-solid fa-microchip"></i></span>
                     <span class="cc-wifi"><i class="fa-solid fa-wifi"></i></span>
                 </div>
                 <div class="cc-number">
-                    <span>1234</span>
-                    <span>5678</span>
-                    <span>9012</span>
-                    <span>3456</span>
+                    <span>5412</span>
+                    <span>7590</span>
+                    <span>3412</span>
+                    <span>8901</span>
                 </div>
                 <div class="cc-bottom-row">
                     <div class="cc-holder">
-                        <span class="cc-label">CARDHOLDER</span>
-                        <span class="cc-name">CREDIT CARD</span>
+                        <span class="cc-label">MEMBER HOLDER</span>
+                        <span class="cc-name">VAULTGATE PREMIER</span>
                     </div>
                     <div class="cc-expiry">
-                        <span class="cc-label">VALID</span>
-                        <span class="cc-name">12/28</span>
+                        <span class="cc-label">EXPIRES</span>
+                        <span class="cc-name">10/30</span>
                     </div>
                 </div>
                 <div class="cc-shield-badge">
-                    <i class="fa-solid fa-shield-halved"></i>
+                    <i class="fa-solid fa-vault"></i>
                 </div>
             </div>
         </div>
@@ -51,29 +54,22 @@
         <div class="feature-card-icon">
             <i class="fa-solid fa-bullseye"></i>
         </div>
-        <h3>Accurate Predictions</h3>
-        <p>94.2% test accuracy with advanced ML algorithms.</p>
+        <h3>High Precision Analytics</h3>
+        <p>Evaluates complex risk variables across financial, occupational, and demographic benchmarks.</p>
     </div>
     <div class="feature-card">
         <div class="feature-card-icon">
             <i class="fa-solid fa-bolt"></i>
         </div>
-        <h3>Instant Results</h3>
-        <p>Get approval prediction in seconds, not days.</p>
+        <h3>Instant Decision Engine</h3>
+        <p>Generates real-time qualification probability ratings and confidence scores in milliseconds.</p>
     </div>
     <div class="feature-card">
         <div class="feature-card-icon">
-            <i class="fa-solid fa-lock"></i>
+            <i class="fa-solid fa-list-check"></i>
         </div>
-        <h3>Secure & Private</h3>
-        <p>Your data is encrypted and never stored or shared.</p>
-    </div>
-    <div class="feature-card">
-        <div class="feature-card-icon">
-            <i class="fa-solid fa-brain"></i>
-        </div>
-        <h3>Smart Decision</h3>
-        <p>Helps financial institutions make better lending decisions.</p>
+        <h3>Explainable AI Factors</h3>
+        <p>Delivers detailed decision key factors outlining positive profile strengths or risk flags.</p>
     </div>
 </section>
 {% endblock %}

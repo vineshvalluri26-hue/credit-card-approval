@@ -359,17 +359,7 @@ def clear_history():
     conn.close()
     return redirect(url_for('history'))
 
-@app.route('/insights')
-def insights():
-    """Renders Page 5: Model Insights and plots."""
-    # List model metrics to showcase architecture properties
-    model_info = {
-        'name': model_meta['model_name'],
-        'accuracy': round(model_meta['accuracy'] * 100, 2),
-        'f1_score': round(model_meta['f1_score'] * 100, 2),
-        'roc_auc': round(model_meta['roc_auc'] * 100, 2)
-    }
-    return render_template('insights.html', model=model_info)
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

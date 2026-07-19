@@ -5,40 +5,36 @@
     <div class="info-card">
         <div class="history-header-box">
             <div>
-                <h2><i class="fa-solid fa-clock-rotate-left"></i> Prediction History</h2>
+                <h2><i class="fa-solid fa-clock-rotate-left" style="color: var(--primary-glow); margin-right: 0.5rem;"></i> Historical Query Log</h2>
+                <p>Audit trail of application risk queries processed by the system.</p>
             </div>
             {% if history %}
-                <form action="{{ url_for('clear_history') }}" method="POST" onsubmit="return confirm('Are you sure you want to permanently clear all prediction logs?');">
+                <form action="{{ url_for('clear_history') }}" method="POST" onsubmit="return confirm('Are you sure you want to permanently purge all recorded query logs?');">
                     <button type="submit" class="btn btn-danger">
-                        <i class="fa-solid fa-trash-can"></i> Clear All
+                        <i class="fa-solid fa-trash-can"></i> Purge Logs
                     </button>
                 </form>
             {% endif %}
         </div>
 
         {% if history %}
-            <div class="table-responsive mt-3">
+            <div class="table-responsive">
                 <table class="metrics-table">
                     <thead>
                         <tr>
-                            <th>Date & Time</th>
-                            <th>Approval Chance</th>
-                            <th>Result</th>
+                            <th>Timestamp</th>
+                            <th>Decision Result</th>
                             <th>Confidence</th>
-                            <th>Income</th>
+                            <th>Risk Level</th>
+                            <th>Annual Income</th>
                             <th>Age</th>
-                            <th>Education</th>
+                            <th>Education Level</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for record in history %}
                             <tr>
-                                <td>{{ record.timestamp }}</td>
-                                <td>
-                                    <span class="status-pill {% if record.prediction_label == 'Approved' %}active-pill{% else %}rejected-pill{% endif %}">
-                                        {{ record.confidence }}
-                                    </span>
-                                </td>
+                                <td style="color: var(--text-dim); font-size: 0.85rem;">{{ record.timestamp }}</td>
                                 <td>
                                     {% if record.prediction_label == 'Approved' %}
                                         <span class="status-pill active-pill"><i class="fa-solid fa-circle-check"></i> Approved</span>
@@ -46,18 +42,21 @@
                                         <span class="status-pill rejected-pill"><i class="fa-solid fa-circle-xmark"></i> Rejected</span>
                                     {% endif %}
                                 </td>
+                                <td style="font-family: var(--font-heading); font-weight: 600;">
+                                    {{ record.confidence }}
+                                </td>
                                 <td>
                                     {% set conf_val = record.confidence | replace('%', '') | float %}
                                     {% if conf_val >= 70 %}
-                                        <span class="status-pill active-pill">High</span>
+                                        <span class="status-pill active-pill">Low Risk</span>
                                     {% elif conf_val >= 50 %}
-                                        <span class="status-pill" style="background: rgba(251, 191, 36, 0.15); color: #fbbf24;">Medium</span>
+                                        <span class="status-pill" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3);">Moderate</span>
                                     {% else %}
-                                        <span class="status-pill rejected-pill">Low</span>
+                                        <span class="status-pill rejected-pill">High Risk</span>
                                     {% endif %}
                                 </td>
-                                <td>{{ record.income }}</td>
-                                <td>{{ record.age }}</td>
+                                <td style="font-weight: 600;">{{ record.income }}</td>
+                                <td>{{ record.age }} yrs</td>
                                 <td>{{ record.education }}</td>
                             </tr>
                         {% endfor %}
@@ -69,10 +68,10 @@
                 <div class="placeholder-icon">
                     <i class="fa-solid fa-folder-open"></i>
                 </div>
-                <h3>No Predictions Yet</h3>
-                <p>Start checking credit card eligibility to build your prediction history.</p>
-                <a href="{{ url_for('apply') }}" class="btn btn-primary mt-2">
-                    <i class="fa-solid fa-wallet"></i> Check Eligibility Now
+                <h3>No Query Records Found</h3>
+                <p>Run eligibility assessments to record predictions in your local audit database.</p>
+                <a href="{{ url_for('apply') }}" class="btn btn-primary" style="margin-top: 1rem;">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Run First Assessment
                 </a>
             </div>
         {% endif %}

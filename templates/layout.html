@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CreditShield | Credit Card Approval Predictor</title>
+    <title>VaultGate AI | Automated Financial Risk Assessment</title>
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Space Grotesk & Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <!-- Custom Style Sheet -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -22,8 +22,10 @@
         <header class="main-header">
             <div class="header-container">
                 <a href="{{ url_for('home') }}" class="logo-box">
-                    <i class="fa-solid fa-shield-halved logo-icon"></i>
-                    <span class="logo-text">Credit<span>Shield</span></span>
+                    <div class="logo-icon">
+                        <i class="fa-solid fa-vault"></i>
+                    </div>
+                    <span class="logo-text">Vault<span>Gate</span></span>
                 </a>
                 
                 <nav class="main-nav">
@@ -31,20 +33,17 @@
                         Home
                     </a>
                     <a href="{{ url_for('apply') }}" class="nav-link {% if request.path == '/apply' %}active{% endif %}">
-                        Prediction
+                        Assessment
                     </a>
                     <a href="{{ url_for('history') }}" class="nav-link {% if request.path == '/history' %}active{% endif %}">
-                        History
+                        History Log
                     </a>
-                    <a href="{{ url_for('insights') }}" class="nav-link {% if request.path == '/insights' %}active{% endif %}">
-                        Model Insights
-                    </a>
-                    <a href="{{ url_for('apply') }}" class="btn btn-cta-nav">
+                    <a href="{{ url_for('apply') }}" class="btn-cta-nav">
                         Check Eligibility <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 </nav>
                 
-                <button class="mobile-nav-toggle"><i class="fa-solid fa-bars"></i></button>
+                <button class="mobile-nav-toggle" aria-label="Toggle Menu"><i class="fa-solid fa-bars"></i></button>
             </div>
         </header>
 
@@ -52,23 +51,22 @@
         <aside class="mobile-sidebar">
             <div class="mobile-sidebar-header">
                 <a href="{{ url_for('home') }}" class="logo-box">
-                    <i class="fa-solid fa-shield-halved logo-icon"></i>
-                    <span class="logo-text">Credit<span>Shield</span></span>
+                    <div class="logo-icon">
+                        <i class="fa-solid fa-vault"></i>
+                    </div>
+                    <span class="logo-text">Vault<span>Gate</span></span>
                 </a>
-                <button class="mobile-nav-close"><i class="fa-solid fa-xmark"></i></button>
+                <button class="mobile-nav-close" aria-label="Close Menu"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <nav class="mobile-nav-menu">
                 <a href="{{ url_for('home') }}" class="mobile-nav-link {% if request.path == '/' %}active{% endif %}">
                     <i class="fa-solid fa-house"></i> Home
                 </a>
                 <a href="{{ url_for('apply') }}" class="mobile-nav-link {% if request.path == '/apply' %}active{% endif %}">
-                    <i class="fa-solid fa-wallet"></i> Prediction
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Assessment
                 </a>
                 <a href="{{ url_for('history') }}" class="mobile-nav-link {% if request.path == '/history' %}active{% endif %}">
-                    <i class="fa-solid fa-history"></i> History
-                </a>
-                <a href="{{ url_for('insights') }}" class="mobile-nav-link {% if request.path == '/insights' %}active{% endif %}">
-                    <i class="fa-solid fa-magnifying-glass-chart"></i> Model Insights
+                    <i class="fa-solid fa-clock-rotate-left"></i> History Log
                 </a>
             </nav>
         </aside>
@@ -83,7 +81,7 @@
         <!-- Main Footer -->
         <footer class="main-footer">
             <div class="footer-container">
-                <p>&copy; 2026 CreditShield Risk Mitigation Engine. Automated Credit Approval predictions powered by IBM Watson Machine Learning & XGBoost Classifier.</p>
+                <p>&copy; 2026 VaultGate Risk Scoring Engine. Automated Machine Learning Decision Analytics.</p>
             </div>
         </footer>
     </div>
